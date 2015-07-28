@@ -56,6 +56,13 @@ class CsvWebStorage
     else
       return null
 
+  getCell: (rowIndex, columnIndex) ->
+    rowValueArray = @getRow rowIndex
+    if rowValueArray is null
+      return null
+    cellValue = rowValueArray[columnIndex]
+    return cellValue
+
   ###
   utility
   ###

@@ -70,6 +70,26 @@ test "getColumn", ->
   actual = csvWebStorage.getColumn(columnsNum + 100)
   deepEqual actual, expected, "Storageに存在しない列の値を取得しようとした時はnullが返る。"
 
+test "getCell", ->
+  rowIndex = 0
+  columnsIndex = 0
+  rowValueArray = []
+  for i in [0...columnsNum]
+    rowValueArray.push ''
+  rowValueArray[0] = 'A'
+  csvWebStorage.saveRow rowIndex, rowValueArray
+  
+  expected = 'A'
+  actual = csvWebStorage.getCell rowIndex, columnsIndex
+  equal actual, expected, "Storageに保存してあるセルの値を取得。"
+
+  expected = null
+  actual = csvWebStorage.getCell (rowIndex + 100), columnsIndex
+  equal actual, expected, "Storageに存在しない行のセルの値を取得しようとした時はnullが返る。"
+
+  expected = null
+  actual = csvWebStorage.getCell rowIndex, (columnsIndex + 100)
+  equal actual, expected, "Storageに存在しない列のセルの値を取得しようとした時はnullが返る。"
 
 module "utility"
 test "createArrayBySameValue", ->
