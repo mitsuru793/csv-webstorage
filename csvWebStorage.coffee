@@ -63,6 +63,12 @@ class CsvWebStorage
     cellValue = rowValueArray[columnIndex]
     return cellValue
 
+  getCsv: ->
+    csv = ""
+    for i in [0...@rowsNum]
+      csv += @getRow(i).join(@csvDelimiter) + "\n"
+    return csv
+
   ###
   utility
   ###

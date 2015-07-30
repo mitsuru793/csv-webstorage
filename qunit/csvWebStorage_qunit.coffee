@@ -91,6 +91,18 @@ test "getCell", ->
   actual = csvWebStorage.getCell rowIndex, (columnsIndex + 100)
   equal actual, expected, "Storageに存在しない列のセルの値を取得しようとした時はnullが返る。"
 
+test "getCsv", ->
+  csv = ""
+  rowCsv = ""
+  for i in [0...columnsNum - 1]
+    rowCsv += ","
+  for i in [0...rowsNum]
+    csv += rowCsv + "\n"
+
+  expected = csv
+  actual = csvWebStorage.getCsv()
+  equal actual, expected, "storageに保存したデータをcsvに変換して文字列として返す"
+
 module "utility"
 test "createArrayBySameValue", ->
   expected = ['@','@','@','@']
