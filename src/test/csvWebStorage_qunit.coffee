@@ -586,3 +586,14 @@ test "subColumn", ->
   expected = -1
   actual = csvWebStorage.endColumnIndex
   equal actual, expected, "存在している列数以上を削除しようとした時は、インスタンスプロパティのendColumnIndex（最終列のインデックス）が-1になる。"
+
+module "cell"
+test "saveCell", ->
+  rowIndex = 5
+  columnIndex = 2
+  cellValue = "testValue"
+  csvWebStorage.saveCell rowIndex, columnIndex, cellValue
+
+  expected = cellValue
+  actual = csvWebStorage.getRow(rowIndex)[columnIndex]
+  equal actual, expected, "特定のcellに値を保存できる"

@@ -1,4 +1,4 @@
-class CsvWebStorage
+class @CsvWebStorage
   constructor: (@tablePrefix, @rowsNum, @columnsNum, @storage=localStorage) ->
     @csvDelimiter = ','
     @rowPrefix = "#{@tablePrefix}_row"
@@ -202,3 +202,10 @@ class CsvWebStorage
   subColumn: (subNum)->
     for i in [0...subNum]
       @removeColumn @endColumnIndex - i
+
+  # cell
+  
+  saveCell: (rowIndex, columnIndex, value) ->
+    rowValueArray = @getRow rowIndex
+    rowValueArray[columnIndex] = value
+    @saveRow rowIndex, rowValueArray
