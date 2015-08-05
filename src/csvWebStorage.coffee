@@ -1,13 +1,19 @@
 class @CsvWebStorage
-  constructor: (@tablePrefix, @rowsNum, @columnsNum, @storage=localStorage) ->
+  constructor: (@tablePrefix, rowsNum, @columnsNum, @initStorage=true, @storage=localStorage) ->
     @csvDelimiter = ','
     @rowPrefix = "#{@tablePrefix}_row"
     @rowRegExp = new RegExp(@rowPrefix + '_(\\d+)')
 
+
+    if @initStorage
+      @rowsNum = rowsNum
+      @initTable @rowsNum, @columnsNum
+    else
+      @rowsNum = 0
+
     @endRowIndex = @rowsNum - 1
     @endColumnIndex = @columnsNum - 1
 
-    @initTable @rowsNum, @columnsNum
 
   ###
   init
