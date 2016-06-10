@@ -1,5 +1,5 @@
 class @CsvWebStorage
-  constructor: (@tablePrefix, rowsNum, @columnsNum, @initStorage=true, @storage=localStorage) ->
+  constructor: (@tablePrefix, @rowsNum, @columnsNum, @initStorage=true, @storage=localStorage) ->
     @csvDelimiter = ','
     @rowPrefix = "#{@tablePrefix}_row"
     @rowRegExp = new RegExp(@rowPrefix + '_(\\d+)')
@@ -8,8 +8,8 @@ class @CsvWebStorage
     if @initStorage
       @rowsNum = rowsNum
       @initTable @rowsNum, @columnsNum
-    else
-      @rowsNum = 0
+    else if @getRowKeys()
+      # TODO endIndexの更新
 
     @endRowIndex = @rowsNum - 1
     @endColumnIndex = @columnsNum - 1
@@ -113,12 +113,15 @@ class @CsvWebStorage
   # @param [Array] rowValueArray 要素数は列数に一致すること
   saveRow: (rowIndex, rowValueArray, validate=true) ->
     if validate and not @isEqualColumnsNum rowValueArray
+      console.log "saveRow-validate false"
       return false
     if @getRow(rowIndex) is null
       @rowsNum++
       @endRowIndex++
 
     rowKey = @getRowKey rowIndex
+    console.log "rowIndex = " + rowIndex
+    console.log "rowKey = "+ rowKey
     @storage.setItem rowKey, rowValueArray.join(@csvDelimiter)
     return
 
@@ -145,6 +148,8 @@ class @CsvWebStorage
     return rowValueArray
     
   addRow: (addNum, rowValueArray=null) ->
+    console.log "CsvWebStorage-addRow"
+    console.log "@endRowIndex = "+ @endRowIndex
     if not rowValueArray?
       rowValueArray = @createEmptyRow()
     for i in [1..addNum]

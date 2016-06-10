@@ -596,4 +596,5 @@ test "saveCell", ->
 
   expected = cellValue
   actual = csvWebStorage.getRow(rowIndex)[columnIndex]
+  console.log cellValue
   equal actual, expected, "特定のcellに値を保存できる"

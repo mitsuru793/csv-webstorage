@@ -9,7 +9,7 @@ gulp.task 'coffee:compile', ->
   gulp.src srcPath + '/**/*.coffee'
     .pipe $.plumber()
     .pipe $.coffee()
-    .pipe $.uglify()
+    #.pipe $.uglify()
     .pipe $.rename extname: '.js'
     .pipe gulp.dest destPath
 
